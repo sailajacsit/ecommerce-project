@@ -86,7 +86,7 @@ jobs:
         - name: checkout code
           uses: actions/checkout@v4
           with:
-            token: ${{ secrets.GITHUB_TOKEN }}
+            token: ${{ secrets.PAT_TOKEN }}
 
         - name: Update tag in kubernetes deployment manifest
           run: | 
@@ -98,7 +98,8 @@ jobs:
             git config --global user.name "sailajacsit"
             git add kubernetes/productcatalog/deploy.yaml
             git commit -m "[CI]: Update product catalog image tag"
-            git push origin HEAD:main -f
+            git push https://x-access-token:${{ secrets.PAT_TOKEN }}@github.com/${{ github.repository }}.git HEAD:${{ github.ref_name }} -f
+
 
         
         
